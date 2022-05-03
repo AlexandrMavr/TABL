@@ -1,0 +1,26 @@
+
+psql -U postgres
+
+create user test_user with password '123456';
+
+create database test_database with owner test_user;
+
+create table if not exists Исполнитель (
+	id serial primary key,
+	Псевдоним varchar(100) unique not null
+);
+
+create table if not exists Альбом (
+	id serial primary key,
+	Название varchar(100) unique not null,
+	Год_выпуска varchar(4), 
+	Исполнитель_id integer references Исполнитель(id)
+);
+
+create table if not exists Трек (
+	id serial primary key,
+	Название varchar(100) unique not null,
+	Длительность numeric(3,2),
+	Альбом_id integer references Альбом(id)
+);
+
